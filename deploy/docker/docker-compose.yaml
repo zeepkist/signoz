@@ -2,6 +2,7 @@ version: "3"
 x-common: &common
   networks:
     - signoz-net
+    - zeepkist-network # Reverse Proxy
   restart: unless-stopped
   logging:
     options:
@@ -130,7 +131,7 @@ services:
       - DASHBOARDS_PATH=/root/config/dashboards
       - STORAGE=clickhouse
       - GODEBUG=netdns=go
-      - TELEMETRY_ENABLED=true
+      - TELEMETRY_ENABLED=false
       - DEPLOYMENT_TYPE=docker-standalone-amd
     healthcheck:
       test:
