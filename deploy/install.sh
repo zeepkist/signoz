@@ -437,47 +437,47 @@ if [[ $desired_os -eq 0 ]]; then
 fi
 
 # Check is Docker daemon is installed and available. If not, the install & start Docker for Linux machines. We cannot automatically install Docker Desktop on Mac OS
-if ! is_command_present docker; then
-
-    if [[ $package_manager == "apt-get" || $package_manager == "zypper" || $package_manager == "yum" ]]; then
-        request_sudo
-        install_docker
-        # enable docker without sudo from next reboot
-        sudo usermod -aG docker "${USER}"
-    elif is_mac; then
-        echo ""
-        echo "+++++++++++ IMPORTANT READ ++++++++++++++++++++++"
-        echo "Docker Desktop must be installed manually on Mac OS to proceed. Docker can only be installed automatically on Ubuntu / openSUSE / SLES / Redhat / Cent OS"
-        echo "https://docs.docker.com/docker-for-mac/install/"
-        echo "++++++++++++++++++++++++++++++++++++++++++++++++"
-
-        send_event "docker_not_installed"
-        exit 1
-    else
-        echo ""
-        echo "+++++++++++ IMPORTANT READ ++++++++++++++++++++++"
-        echo "Docker must be installed manually on your machine to proceed. Docker can only be installed automatically on Ubuntu / openSUSE / SLES / Redhat / Cent OS"
-        echo "https://docs.docker.com/get-docker/"
-        echo "++++++++++++++++++++++++++++++++++++++++++++++++"
-
-        send_event "docker_not_installed"
-        exit 1
-    fi
-fi
-
-if has_docker_compose_plugin; then
-    echo "docker compose plugin is present, using it"
+#if ! is_command_present docker; then
+#
+#    if [[ $package_manager == "apt-get" || $package_manager == "zypper" || $package_manager == "yum" ]]; then
+#        request_sudo
+#        install_docker
+#        # enable docker without sudo from next reboot
+#        sudo usermod -aG docker "${USER}"
+#    elif is_mac; then
+#        echo ""
+#        echo "+++++++++++ IMPORTANT READ ++++++++++++++++++++++"
+#        echo "Docker Desktop must be installed manually on Mac OS to proceed. Docker can only be installed automatically on Ubuntu / openSUSE / SLES / Redhat / Cent OS"
+#        echo "https://docs.docker.com/docker-for-mac/install/"
+#        echo "++++++++++++++++++++++++++++++++++++++++++++++++"
+#
+#        send_event "docker_not_installed"
+#        exit 1
+#    else
+#        echo ""
+#        echo "+++++++++++ IMPORTANT READ ++++++++++++++++++++++"
+#        echo "Docker must be installed manually on your machine to proceed. Docker can only be installed automatically on Ubuntu / openSUSE / SLES / Redhat / Cent OS"
+#        echo "https://docs.docker.com/get-docker/"
+#        echo "++++++++++++++++++++++++++++++++++++++++++++++++"
+#
+#        send_event "docker_not_installed"
+#        exit 1
+#    fi
+#fi
+#
+#if has_docker_compose_plugin; then
+#    echo "docker compose plugin is present, using it"
     docker_compose_cmd="docker compose"
 # Install docker-compose
-else
-    docker_compose_cmd="docker-compose"
-    if ! is_command_present docker-compose; then
-        request_sudo
-        install_docker_compose
-    fi
-fi
+#else
+#    docker_compose_cmd="docker-compose"
+#    if ! is_command_present docker-compose; then
+#        request_sudo
+#        install_docker_compose
+#    fi
+#fi
 
-start_docker
+#start_docker
 
 # Switch to the Docker Standalone directory
 pushd "${BASE_DIR}/${DOCKER_STANDALONE_DIR}" > /dev/null 2>&1
